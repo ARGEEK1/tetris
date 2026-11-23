@@ -206,18 +206,68 @@ kbd {
   background: var(--accent-hover);
 }
 
-/* ---- Botón de tema ---- */
-.theme-btn {
+/* ---- Switch de tema (pixel art) ---- */
+.theme-switch {
   align-self: flex-start;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  padding: 0;
   cursor: pointer;
+  color: var(--text);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  font-weight: 700;
 }
 
-.theme-btn:hover {
-  border-color: var(--accent);
+/* Pista: esquinas escalonadas con clip-path (bordes rectos, sin antialiasing) */
+.switch-track {
+  --notch: polygon(
+    4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px), 0 4px, 4px 4px);
+  position: relative;
+  display: block;
+  width: 56px;
+  height: 28px;
+  background: var(--text);          /* borde de 4px */
+  clip-path: var(--notch);
+}
+
+.switch-track::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: var(--surface);
+  clip-path: polygon(
+    4px 0, calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px), 0 4px, 4px 4px);
+}
+
+.switch-thumb {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 16px;
+  height: 12px;
+  background: var(--accent);
+  box-shadow: inset -4px -4px 0 rgba(0, 0, 0, 0.25), inset 4px 4px 0 rgba(255, 255, 255, 0.3);
+  transition: transform 0.2s steps(4, end);
+}
+
+/* Claro = interruptor a la derecha */
+.theme-switch[aria-checked="true"] .switch-thumb {
+  transform: translateX(24px);
+}
+
+.theme-switch:hover .switch-track {
+  background: var(--accent);
+}
+
+.theme-switch:focus-visible {
+  outline: 2px dashed var(--accent);
+  outline-offset: 4px;
 }

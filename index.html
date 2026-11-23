@@ -48,7 +48,10 @@
           </ul>
         </div>
 
-        <button id="theme-btn" class="theme-btn" type="button">Tema: oscuro</button>
+        <button id="theme-btn" class="theme-switch" type="button" role="switch" aria-checked="false" aria-label="Alternar modo claro/oscuro">
+          <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+          <span id="theme-label" class="switch-label">Tema: oscuro</span>
+        </button>
       </aside>
 
       <div id="overlay" class="overlay hidden">

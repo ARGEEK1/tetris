@@ -40,6 +40,7 @@ const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
 const themeBtn = document.getElementById('theme-btn');
+const themeLabel = document.getElementById('theme-label');
 
 const CLEAR_DURATION = 400;
 const BLINK_MS = 100;
@@ -176,7 +177,8 @@ function cssVar(name) {
 function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
   try { localStorage.setItem('theme', theme); } catch (e) { /* almacenamiento no disponible */ }
-  themeBtn.textContent = theme === 'light' ? 'Tema: claro' : 'Tema: oscuro';
+  themeBtn.setAttribute('aria-checked', String(theme === 'light'));
+  themeLabel.textContent = theme === 'light' ? 'Tema: claro' : 'Tema: oscuro';
   // el canvas no hereda CSS: redibujar (también en pausa o game over)
   draw();
   drawNext();
