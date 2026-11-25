@@ -84,14 +84,38 @@ Después abre `http://localhost:8000` en el navegador.
 | `↑` o `X` | Rotar la pieza en sentido horario |
 | `↓`       | Soft drop (bajar más rápido)      |
 | `Espacio` | Hard drop (caída instantánea)     |
-| `P`       | Pausar / reanudar                 |
+| `P` / `Esc` | Pausar / reanudar (abre el menú de pausa) |
 | `T`       | Alternar tema oscuro / claro      |
+| `K`       | Cambiar de skin (Retro, Neón, Pastel, Pixel art) |
+
+---
+
+### Skins visuales
+
+El panel lateral tiene un selector **SKIN** (también la tecla `K`) con cuatro apariencias: **Retro** (por defecto), **Neón**, **Pastel** y **Pixel art**. Afecta al tablero, la pieza fantasma y la siguiente pieza, es independiente del tema oscuro/claro y se guarda en `localStorage` (clave `skin`). Las definiciones están en `skins.js`.
+
+---
+
+## Records
+
+- Se guardan en `localStorage` (clave `tetris-records`) los **5 mejores puntajes** con nombre (máx. 12 caracteres).
+- La tabla se ve siempre en el panel lateral y también en el overlay de **GAME OVER**.
+- Si tu puntuación entra en el top, el game over pide tu nombre (Enter o `Guardar`); el input no dispara los controles del juego. Si reinicias sin guardar, se usa el nombre `Jugador`. La entrada nueva se resalta.
+- También se guardan el **mejor combo** (bloqueos consecutivos que despejan líneas; se reinicia al bloquear sin despejar o al reiniciar) y el **máximo de líneas** en una partida.
+- El botón `Borrar records` pide confirmación y limpia todo.
+- La lógica vive en `records.js` (cargado antes de `game.js`).
+
+---
+
+### Menú de pausa
+
+Al pausar aparece un menú con: **Reanudar**, **Reiniciar**, **Ver controles** y **Nivel inicial** (1-15, se aplica a la siguiente partida). Mientras está abierto, las teclas de juego quedan bloqueadas; `Esc` reanuda o vuelve atrás desde la lista de controles.
 
 ---
 
 ## Cómo funciona
 
-El juego se compone de tres archivos que cooperan:
+El juego se compone de varios archivos que cooperan (además, `records.js` gestiona la tabla de records y `game.js` la usa mediante el objeto global `Records`; ids `records-*` en `index.html`):
 
 ### 1. `index.html`
 
@@ -159,7 +183,9 @@ Cuando una pieza recién generada ya colisiona al aparecer (`spawn`), se dispara
 03-tetris/
 ├── index.html      # Estructura del DOM y canvas
 ├── style.css       # Estilos del juego (dark theme)
-├── game.js         # Toda la lógica del Tetris (~300 líneas)
+├── game.js         # Lógica del Tetris
+├── records.js      # Tabla de records (localStorage)
+├── skins.js        # Definición de skins visuales
 └── README.md
 ```
 

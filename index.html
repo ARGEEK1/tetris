@@ -9,6 +9,9 @@
     try { document.documentElement.dataset.theme = localStorage.getItem('theme') === 'light' ? 'light' : 'dark'; }
     catch (e) { document.documentElement.dataset.theme = 'dark'; }
   </script>
+  <script>
+    try { var sk = localStorage.getItem('skin'); if (sk) document.documentElement.dataset.skin = sk; } catch (e) {}
+  </script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -43,9 +46,27 @@
             <li><kbd>↑</kbd> rotar</li>
             <li><kbd>↓</kbd> bajar</li>
             <li><kbd>Space</kbd> caída</li>
-            <li><kbd>P</kbd> pausa</li>
+            <li><kbd>P</kbd> / <kbd>Esc</kbd> pausa</li>
             <li><kbd>T</kbd> tema</li>
+            <li><kbd>K</kbd> skin</li>
           </ul>
+        </div>
+
+        <div class="panel-section records-panel">
+          <span class="label">RECORDS</span>
+          <ol id="records-list" class="records-list"></ol>
+          <span id="records-stats" class="records-stats"></span>
+          <button id="records-reset" class="records-btn" type="button">Borrar records</button>
+        </div>
+
+        <div class="panel-section">
+          <label class="label" for="skin-select">SKIN</label>
+          <select id="skin-select" class="skin-select">
+            <option value="retro">Retro</option>
+            <option value="neon">Neón</option>
+            <option value="pastel">Pastel</option>
+            <option value="pixel">Pixel art</option>
+          </select>
         </div>
 
         <button id="theme-btn" class="theme-btn" type="button">Tema: oscuro</button>
@@ -55,13 +76,48 @@
         <div class="overlay-box">
           <p id="overlay-title">GAME OVER</p>
           <p id="overlay-score"></p>
+          <div id="records-entry" class="records-entry hidden">
+            <label for="records-name">¡Nuevo record! Tu nombre:</label>
+            <input id="records-name" type="text" maxlength="12" placeholder="Jugador" autocomplete="off" />
+            <button id="records-save" class="records-btn" type="button">Guardar</button>
+          </div>
+          <ol id="records-overlay-list" class="records-list"></ol>
           <button id="restart-btn">Reiniciar</button>
+        </div>
+      </div>
+
+      <div id="pause-menu" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title">
+        <div class="overlay-box pause-box">
+          <p id="pause-title">PAUSA</p>
+          <div id="pause-main" class="pause-view">
+            <button id="pause-resume" type="button">Reanudar</button>
+            <button id="pause-restart" type="button">Reiniciar</button>
+            <button id="pause-controls-btn" type="button">Ver controles</button>
+            <label class="pause-field" for="pause-level">Nivel inicial
+              <select id="pause-level"></select>
+            </label>
+            <p class="pause-hint">Se aplica al reiniciar. Esc para reanudar.</p>
+          </div>
+          <div id="pause-controls" class="pause-view hidden">
+            <ul class="pause-list">
+              <li><kbd>←</kbd><kbd>→</kbd> mover</li>
+              <li><kbd>↑</kbd> / <kbd>X</kbd> rotar</li>
+              <li><kbd>↓</kbd> bajar</li>
+              <li><kbd>Space</kbd> caída</li>
+              <li><kbd>P</kbd> / <kbd>Esc</kbd> pausa</li>
+              <li><kbd>T</kbd> tema</li>
+              <li><kbd>K</kbd> skin</li>
+            </ul>
+            <button id="pause-back" type="button">Volver</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <script src="title.js"></script>
+  <script src="records.js"></script>
+  <script src="skins.js"></script>
   <script src="game.js"></script>
 </body>
 </html>
